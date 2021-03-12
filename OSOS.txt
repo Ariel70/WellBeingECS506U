@@ -1,0 +1,31 @@
+def info_cmd(fields):
+
+    if checkArgs(fields, 1):
+
+        if os.path.exists(fields[1])==True:
+
+            print("File Name:", fields[1]) #filename
+
+            if os.path.isfile(fields[1])==True: #file or directory?
+
+                print("Directory/File: File")
+
+            else:
+
+                print("Directory/File: Directory")
+
+            owner = getpwuid(stat(fields[1]).st_uid).pw_name
+
+            print("Owner:", owner) #owner?
+
+            (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(fields[1])
+
+            print("Last Edited:", time.ctime(mtime)) #mtime
+
+            path = os.access(fields[1], os.X_OK) #executable?
+
+            print("Exe?:", path)
+
+        else:
+
+            print("File/Directory doesn't exist")
